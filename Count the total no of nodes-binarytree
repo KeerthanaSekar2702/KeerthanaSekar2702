@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a tree node
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Function to create a new node
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Function to count the total number of nodes in the binary tree
+int countNodes(Node* root) {
+    // Base case: if the root is NULL, return 0
+    if (root == NULL) {
+        return 0;
+    }
+    
+    // Count the nodes in the left and right subtrees and add 1 for the current node
+    int leftCount = countNodes(root->left);
+    int rightCount = countNodes(root->right);
+    
+    return leftCount + rightCount + 1;
+}
+
+int main() {
+    // Create nodes
+    Node* root = createNode(10);
+    root->left = createNode(5);
+    root->right = createNode(20);
+    root->left->left = createNode(3);
+    root->left->right = createNode(8);
+    root->right->left = createNode(15);
+    root->right->right = createNode(25);
+    
+    // Count the total number of nodes in the binary tree
+    int totalNodes = countNodes(root);
+    
+    // Print the total number of nodes
+    printf("Total number of nodes in the binary tree: %d\n", totalNodes);
+    
+    // Free allocated memory (not shown here for simplicity)
+    // In a real application, you'd need to implement a function to free the tree nodes.
+
+    return 0;
+}
