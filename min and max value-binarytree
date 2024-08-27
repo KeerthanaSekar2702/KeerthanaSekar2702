@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+// Define the structure for a tree node
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Function to create a new node
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+// Function to find the minimum value in the binary tree
+int findMin(Node* root) {
+    // Initialize minimum to a very large value
+    int min = INT_MAX;
+    if (root == NULL) {
+        return min;
+    }
+    
+    // Check the root node value
+    if (root->data < min) {
+        min = root->data;
+    }
+    
+    // Recursively find the minimum value in the left subtree
+    int leftMin = findMin(root->left);
+    if (leftMin < min) {
+        min = leftMin;
+    }
+    
+    // Recursively find the minimum value in the right subtree
+    int rightMin = findMin(root->right);
+    if (rightMin < min) {
+        min = rightMin;
+    }
+    
+    return min;
+}
+
+// Function to find the maximum value in the binary tree
+int findMax(Node* root) {
+    // Initialize maximum to a very small value
+    int max = INT_MIN;
+    if (root == NULL) {
+        return max;
+    }
+    
+    // Check the root node value
+    if (root->data > max) {
+        max = root->data;
+    }
+    
+    // Recursively find the maximum value in the left subtree
+    int leftMax = findMax(root->left);
+    if (leftMax > max) {
+        max = leftMax;
+    }
+    
+    // Recursively find the maximum value in the right subtree
+    int rightMax = findMax(root->right);
+    if (rightMax > max) {
+        max = rightMax;
+    }
+    
+    return max;
+}
+
+int main() {
+    // Create nodes
+    Node* root = createNode(10);
+    root->left = createNode(5);
+    root->right = createNode(20);
+    root->left->left = createNode(3);
+    root->left->right = createNode(8);
+    root->right->left = createNode(15);
+    root->right->right = createNode(25);
+    
+    // Find minimum and maximum values
+    int minValue = findMin(root);
+    int maxValue = findMax(root);
+    
+    // Print results
+    printf("Minimum value in the binary tree: %d\n", minValue);
+    printf("Maximum value in the binary tree: %d\n", maxValue);
+    
+    // Free allocated memory (not shown here for simplicity)
+    // In a real application, you'd need to implement a function to free the tree nodes.
+
+    return 0;
+}
